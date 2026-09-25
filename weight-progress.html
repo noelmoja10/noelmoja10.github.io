@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Weight Progress: Noel Canlas’s Android capstone case study covering software design, algorithms and data structures, and planned database enhancements.">
+  <meta name="theme-color" content="#173f35">
+  <title>Weight Progress — Noel Canlas</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/site.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="container header-inner"><a class="brand" href="index.html" aria-label="Noel Canlas home"><span class="monogram" aria-hidden="true">nc<span>.</span></span><span>Noel Canlas</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" hidden>Menu <span aria-hidden="true">＋</span></button><nav class="main-nav" id="main-nav" aria-label="Main navigation"><a href="index.html#work" aria-current="location">Selected work</a>
+<a href="index.html#code-review">Code review</a>
+<a href="index.html#about">About</a>
+<a class="nav-github" href="https://github.com/noelmoja10" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a></nav></div></header>
+  <main id="main">
+    <section class="project-page-hero container" aria-labelledby="project-title"><a class="breadcrumb" href="index.html#work"><span aria-hidden="true">←</span> Back to selected work</a>
+<div class="project-page-heading"><div><p class="eyebrow">Android application / CS 499 capstone</p>
+<h1 id="project-title">Weight Progress<span style="color:#7c8d69">.</span></h1>
+<p>A clearer way to track personal progress. A practical opportunity to strengthen the software behind the experience.</p></div><span class="project-icon" aria-hidden="true">↗</span></div>
+<dl class="project-facts"><div><dt>Original artifact</dt>
+<dd>CS 360 · May–June 2026</dd></div>
+<div><dt>Enhancement categories</dt>
+<dd>Design · Algorithms · Databases</dd></div>
+<div><dt>Technology</dt>
+<dd>Java · Android · SQLite · JUnit</dd></div>
+<div><dt>Portfolio status</dt>
+<dd>In progress · September 2026</dd></div></dl>
+<nav class="case-nav" aria-label="Case study sections"><a href="#software-design">01 / Software design</a>
+<a href="#algorithms">02 / Algorithms</a>
+<a href="#databases">03 / Databases</a>
+<a href="#verification">Verification &amp; materials</a></nav></section>
+
+    <section class="container case-section" aria-labelledby="context-title"><div class="case-main"><p class="eyebrow">The starting point</p>
+<h2 id="context-title">Useful functionality.<br><em>Room for a stronger foundation.</em></h2>
+<p>Originally created for CS 360: Mobile Architecture and Programming, Weight Progress supports local accounts, daily weight records, history editing, goal tracking, and optional SMS notifications. The original app used Java, Android XML layouts, and SQLite. It already included password hashing, database constraints, and useful functionality.</p>
+<p>The capstone builds on that foundation. Rather than treating each category as an unrelated project, I’m using one application to explore maintainable architecture, efficient analysis, and reliable persistence. These summaries describe the work so far; the final category narratives and technical artifacts will be published after review.</p></div></section>
+
+    <section class="container case-section" id="software-design" aria-labelledby="design-title"><div class="case-layout"><div class="case-main"><p class="eyebrow">01 / Software design &amp; engineering</p>
+<h2 id="design-title">Make it easier to use.<br><em>And easier to maintain.</em></h2>
+<div class="tags"><span class="status">Implemented · in review</span></div>
+<p>The original activity handled too many responsibilities: navigation, rendering, input validation, and data access. The enhancement separates those concerns and improves the interface without discarding the app’s existing functionality.</p>
+<div class="comparison"><div><h4>Before</h4>
+<p>A large activity coordinated interface behavior and application logic, making isolated testing and future changes harder.</p></div>
+<div><h4>After</h4>
+<p>Dedicated screens, lifecycle-aware ViewModels, repository interfaces, and testable validation separate presentation from persistence.</p></div></div>
+<h3>A more considered user experience</h3>
+<ul class="detail-list"><li>One-time profile and goal setup, with account and goal editing available afterward.</li>
+<li>Inline input feedback, consistent pounds/kilograms display, and clearer confirmation dialogs.</li>
+<li>A stationary bottom navigation bar with direction-aware content transitions.</li>
+<li>Three recent entries on Home, full history access, and a visible goal-date countdown when a target date is set.</li></ul>
+<h3>Learning through the enhancement</h3>
+<p>A UI improvement is also a state-management problem. Separating validation, screen state, and storage makes it easier to test successful saves, incorrect input, rotation, and account changes independently.</p>
+<div class="outcomes"><strong>Outcome alignment:</strong> Applying software-engineering tools and techniques (4), documenting design choices (2), and supporting a security mindset through validation and controlled data access (5).</div></div>
+<figure class="case-aside"><a href="assets/images/weight-progress-home.png" target="_blank" rel="noopener noreferrer" aria-label="Open the full Home screenshot in a new tab"><img src="assets/images/weight-progress-home.png" alt="Enhanced Weight Progress Home with adjacent kg labels, current and goal weight, quick entry, and fixed navigation." width="1080" height="2400" loading="lazy"></a><figcaption>The enhanced Home screen.<br>Fictional test data · <a href="assets/images/weight-progress-home.png" target="_blank" rel="noopener noreferrer">View full screenshot ↗</a></figcaption></figure></div></section>
+
+    <section class="container case-section" id="algorithms" aria-labelledby="algorithm-title"><div class="case-layout"><div class="case-main"><p class="eyebrow">02 / Algorithms &amp; data structures</p>
+<h2 id="algorithm-title">From individual entries<br><em>to a meaningful trend.</em></h2>
+<div class="tags"><span class="status">Implemented · in review</span></div>
+<p>The analytics enhancement adds a pure Java engine that calculates moving averages, a calendar-day weight trend, and a conditional goal-date estimate. Its results appear in a new Home trends section while the earlier interface improvements remain intact.</p>
+<h3>The data structures behind the insight</h3>
+<ul class="detail-list"><li>A defensive copy is sorted chronologically so out-of-order entry dates are handled consistently.</li>
+<li>An <code>ArrayDeque</code> and running sum maintain a sliding window without repeatedly scanning its contents. The interface offers 3-, 7-, and 14-entry windows.</li>
+<li>Centered running moments support linear regression using elapsed calendar days—not record positions—so irregular intervals are represented correctly.</li>
+<li>Invalid, duplicate-date, future-date, or mixed-account data is rejected rather than silently producing a misleading estimate.</li></ul>
+<h3>The core moving-average step</h3>
+<pre class="algorithm-code"><code>window.addLast(item.pounds);
+sum += item.pounds;
+if (window.size() &gt; windowSize) {
+    sum -= window.removeFirst();
+}
+// Average the entries currently in the window.
+double average = sum / window.size();</code></pre><p class="caption">Adapted from <code>ProgressAnalyzer.java</code>; variable and comment presentation shortened for readability.</p>
+<div class="comparison"><div><h4>Naive moving average</h4>
+<p>Repeated window scans take up to O(nw) time, where n is the number of records and w is the window size.</p></div>
+<div><h4>Implemented approach</h4>
+<p>O(n log n) sorting followed by an O(n) analytics pass. Total space is O(n), including the copied records and returned points.</p></div></div>
+<p class="caption">For a fixed small window, both averaging approaches are linear in n. The deque reduces repeated work as the window grows; these are complexity claims, not measured speedups.</p>
+<h3>Estimates with explicit limits</h3>
+<p>A trend requires at least three distinct observations spanning seven days. Flat, rising, stale, and out-of-range trends produce explanatory states instead of a forecast. A projected date is separate from the user’s chosen target date. Estimates assume the historical trend continues; they are not guarantees or medical advice.</p>
+<div class="outcomes"><strong>Outcome alignment:</strong> Algorithm selection and trade-off analysis (3), implementation and testing (4), clear explanations of uncertainty (2), and defensive input/account-boundary handling (5).</div></div>
+<figure class="case-aside"><a href="assets/images/weight-progress-trends.png" target="_blank" rel="noopener noreferrer" aria-label="Open the full trends screenshot in a new tab"><img src="assets/images/weight-progress-trends.png" alt="Weight trends with seven-entry moving average, daily regression trend, estimated goal date, and an explanation of the estimate’s limitations." width="1080" height="2400" loading="lazy"></a><figcaption>The Milestone Three trends section.<br>Synthetic test measurements demonstrate arithmetic—not a recommended rate of weight change.<br><a href="assets/images/weight-progress-trends.png" target="_blank" rel="noopener noreferrer">View full screenshot ↗</a></figcaption></figure></div></section>
+
+    <section class="container case-section" id="databases" aria-labelledby="database-title"><div class="case-layout"><div class="case-main"><p class="eyebrow">03 / Databases &amp; persistence</p>
+<h2 id="database-title">Evolve the data model.<br><em>Protect what’s already there.</em></h2>
+<div class="tags"><span class="status neutral">Planned enhancement · not implemented</span></div>
+<p>The app currently uses SQLite with an additive version-three preferences schema. The dedicated database enhancement remains the next milestone; the Room migration and goal-history model described here are plans, not completed features.</p>
+<h3>The enhancement plan</h3>
+<ul class="detail-list"><li>Introduce Room entities and DAO interfaces behind the existing repository boundary.</li>
+<li>Represent goal history explicitly, with user relationships and appropriate keys, constraints, and indexes.</li>
+<li>Use transactions for multi-step changes and parameterized queries for account-scoped reads and writes.</li>
+<li>Test a versioned migration that preserves existing accounts, password hashes and salts, preferences, and weight records.</li></ul>
+<div class="outcomes"><strong>Planned outcome alignment:</strong> Database implementation techniques (4), evaluation of data-model trade-offs (3), migration documentation (2), and data integrity and privacy safeguards (5).</div></div>
+<aside class="case-aside db-plan" aria-label="Conceptual database enhancement"><p class="schema-label">CONCEPTUAL RELATIONSHIPS</p>
+<div class="schema-node">User <span>one</span></div>
+<div class="schema-children">
+<div class="schema-node">Weight records <span>many</span></div>
+<div class="schema-node">Goal history <span>many</span></div>
+</div>
+<p class="test-note">Each user will own their records and goal history. This is a simplified planning diagram, not the current database schema.</p></aside></div></section>
+
+    <section class="container case-bottom" id="verification" aria-labelledby="verification-title"><div class="section-top"><div><p class="eyebrow">Verification / September 24, 2026</p>
+<h2 id="verification-title">Confidence comes from checking.</h2></div></div>
+<p class="section-intro" style="max-width:700px">The Milestone Three build was checked with unit tests and Android emulator tests, including regressions for the earlier UI improvements.</p>
+<div class="verification-grid"><div><strong>94</strong><span>Unit tests passed</span></div>
+<div><strong>47</strong><span>Emulator tests passed</span></div>
+<div><strong>0</strong><span>Android lint errors</span></div></div>
+<p class="test-note">Verification used Android 15 / API 35 and fictional test accounts. 137 lint warnings remain. These checks do not establish compatibility with every device, real SMS delivery, full accessibility, or medical validity. The source and verification reports will accompany the polished artifact.</p>
+<div class="artifact-status"><h3>Artifact and narrative publication</h3>
+<p>The software-design and algorithms enhancements are implemented locally and awaiting review and polishing. Original/enhanced code packages and the final category narratives are not published on this site yet. This case study is a progress summary, not a replacement for the required narratives.</p>
+<p>The code-review video is available now and documents the starting point and planned enhancements.</p>
+<a class="text-link" href="index.html#code-review">Watch the code review <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+  <footer class="site-footer container"><a class="brand" href="index.html"><span class="monogram" aria-hidden="true">nc<span>.</span></span><span>Always learning.<br><strong>Always improving.</strong></span></a>
+<div class="footer-links"><a href="index.html#work">All work ←</a>
+<a href="#top">Back to top ↑</a></div>
+<p>© 2026 Noel Canlas · CS 499 Computer Science ePortfolio</p></footer>
+</body>
+</html>
