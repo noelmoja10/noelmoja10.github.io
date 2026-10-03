@@ -2415,6 +2415,96 @@ ul {
 
 }
 
+/* Publication pages and current app showcase. */
+.publication-feature {
+  margin-top:32px;
+  padding:32px 36px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--sage);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:32px;
+  align-items:center
+}
+.publication-feature h3 { margin:8px 0 12px; font-size:28px }
+.publication-feature p:not(.eyebrow) { max-width:570px; color:var(--muted) }
+.publication-actions { display:flex; flex-direction:column; align-items:flex-start; gap:12px }
+.current-ui-section { padding-block:90px; border-top:1px solid var(--line) }
+.ui-gallery { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px; margin-top:40px }
+.ui-gallery figure { margin:0; min-width:0 }
+.ui-gallery figure>a { display:block; background:var(--sage); border-radius:24px; padding:24px; border:1px solid var(--line) }
+.ui-gallery img { width:100%; max-width:230px; margin:auto; border:5px solid var(--green); border-radius:22px; box-shadow:0 12px 30px #173f3512 }
+.ui-gallery figcaption { padding:24px 4px 0 }
+.ui-gallery h3 { margin:10px 0; font-size:23px }
+.ui-gallery p { color:var(--muted); font-size:14px }
+.current-ui-section>.test-note { margin-top:30px; max-width:900px }
+.scope-note { border-left:2px solid #bac9b2; padding-left:16px; font-size:14px; color:var(--muted) }
+.narrative-hero { padding-block:60px 52px; border-bottom:1px solid var(--line) }
+.narrative-hero .eyebrow { margin-top:32px }
+.narrative-hero h1 { font-size:clamp(38px,5vw,68px); max-width:860px; margin:15px 0 24px }
+.narrative-deck { font-size:20px; color:var(--muted) }
+.narrative-meta { display:flex; flex-wrap:wrap; gap:8px 24px; margin:22px 0 26px; font-size:13px; color:var(--muted) }
+.narrative-hero .edition-note { max-width:720px; margin-top:24px; color:var(--muted); font-size:13px }
+.narrative-layout { display:grid; grid-template-columns:250px minmax(0,1fr); gap:80px; padding-block:56px 80px; align-items:start }
+.narrative-sidebar { position:sticky; top:120px; font-size:13px }
+.narrative-sidebar nav { display:flex; flex-direction:column; gap:4px }
+.narrative-sidebar nav .eyebrow { margin-bottom:14px }
+.narrative-sidebar nav a { display:block; padding:12px 0; border-bottom:1px solid var(--line); line-height:1.5 }
+.narrative-sidebar nav a:hover { color:#146455; text-decoration:underline; text-underline-offset:4px }
+.narrative-sidebar>p { margin-top:30px; color:var(--muted) }
+.narrative-body { max-width:750px; min-width:0 }
+.narrative-section { margin-bottom:46px; scroll-margin-top:115px }
+.narrative-section h2 { font-size:28px; letter-spacing:-.025em; line-height:1.25; margin-bottom:20px }
+.narrative-section p { font-size:16px; line-height:1.9; margin-bottom:20px; color:#344a40 }
+.narrative-section a:not(.button) { text-decoration:underline; text-underline-offset:3px; overflow-wrap:anywhere }
+.narrative-section#references p { font-size:14px }
+.publication-followup { padding-top:32px; border-top:1px solid var(--line) }
+.publication-followup .eyebrow { font-size:11px; margin-bottom:12px }
+.publication-followup .button { margin-top:8px }
+@media(max-width:1100px) {
+  .main-nav { gap:20px }
+  .narrative-layout { grid-template-columns:210px minmax(0,1fr); gap:40px }
+  .ui-gallery { gap:20px }
+  .ui-gallery figure>a { padding:16px }
+}
+@media(max-width:800px) {
+  .publication-feature { grid-template-columns:1fr; gap:22px }
+  .narrative-layout { grid-template-columns:1fr; gap:40px }
+  .narrative-sidebar { position:static }
+  .narrative-sidebar nav { display:grid; grid-template-columns:1fr 1fr; gap:0 24px }
+  .narrative-sidebar nav .eyebrow { grid-column:1/-1 }
+  .ui-gallery { grid-template-columns:1fr; gap:38px }
+  .ui-gallery figure { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; align-items:center }
+  .ui-gallery figure>a { padding:20px }
+  .ui-gallery figcaption { padding:0 }
+}
+@media(max-width:600px) {
+  .publication-feature { padding:24px }
+  .publication-feature h3 { font-size:24px }
+  .publication-feature p:not(.eyebrow) { font-size:14px }
+  .current-ui-section { padding-block:52px }
+  .narrative-hero { padding-block:32px }
+  .narrative-meta { flex-direction:column; gap:4px }
+  .narrative-deck { font-size:17px }
+  .narrative-layout { padding-block:32px 48px }
+  .narrative-sidebar nav { display:flex }
+  .narrative-section h2 { font-size:25px }
+  .narrative-section p { font-size:15px; line-height:1.85 }
+  .ui-gallery figure { grid-template-columns:1fr; gap:18px }
+  .ui-gallery figure>a { padding:28px }
+  .ui-gallery img { max-width:220px }
+  .ui-gallery figcaption { padding-inline:4px }
+}
+@media print {
+  .site-header,.site-footer,.narrative-sidebar,.narrative-hero .button-row,.breadcrumb { display:none!important }
+  .narrative-layout { display:block; padding:24px 0 }
+  .narrative-hero { padding:0 0 20px }
+  .narrative-body { max-width:none }
+  .narrative-section h2 { break-after:avoid }
+  .narrative-section p { orphans:3; widows:3 }
+}
+
 /* Keep the complete phone screenshots clear of the project caption. */
 .phone-front {
   top:0;
