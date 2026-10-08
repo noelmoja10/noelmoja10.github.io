@@ -2462,6 +2462,13 @@ ul {
 .publication-followup { padding-top:32px; border-top:1px solid var(--line) }
 .publication-followup .eyebrow { font-size:11px; margin-bottom:12px }
 .publication-followup .button { margin-top:8px }
+.benchmark-table { width:100%; border-collapse:collapse; margin:24px 0; font-size:14px; font-variant-numeric:tabular-nums }
+.benchmark-table caption { text-align:left; font-weight:600; color:var(--green); padding-bottom:12px }
+.benchmark-table th,.benchmark-table td { padding:14px 12px; border-bottom:1px solid var(--line); text-align:right }
+.benchmark-table th:first-child { text-align:left }
+.benchmark-table thead { background:var(--sage); color:var(--green) }
+.benchmark-table tbody th { font-weight:400 }
+.benchmark-table tbody tr:last-child>* { border-bottom:2px solid var(--line) }
 @media(max-width:1100px) {
   .main-nav { gap:20px }
   .narrative-layout { grid-template-columns:210px minmax(0,1fr); gap:40px }
