@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Enhancement 2 narrative by Noel Canlas: algorithms and data structures in Weight Progress, with moving averages, daily trends, and measured history-size benchmarks.">
+  <meta name="theme-color" content="#173f35">
+  <title>Enhancement 2 Narrative — Noel Canlas</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/site.js" defer></script>
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="container header-inner">
+  <a class="brand" href="index.html" aria-label="Noel Canlas home"><span class="monogram" aria-hidden="true">nc<span>.</span></span><span>Noel Canlas</span></a>
+  <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" hidden>Menu <span aria-hidden="true">＋</span></button>
+  <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+    <a href="index.html#work">Selected work</a><a href="enhancement-1.html">Narrative 1</a><a href="enhancement-2.html" aria-current="page">Narrative 2</a><a href="index.html#code-review">Code review</a>
+    <a class="nav-github" href="https://github.com/noelmoja10" target="_blank" rel="noopener noreferrer">GitHub ↗<span class="sr-only"> (opens in a new tab)</span></a>
+  </nav>
+</div></header>
+<main id="main">
+  <section class="container narrative-hero" aria-labelledby="narrative-title">
+    <a class="breadcrumb" href="weight-progress.html#algorithms">← Back to Weight Progress</a>
+    <p class="eyebrow">Enhancement 02 / Algorithms &amp; data structures</p>
+    <h1 id="narrative-title">The reasoning<br><em>behind the trends.</em></h1>
+    <p class="narrative-deck">Weight Progress Algorithms and Data Structures Enhancement</p>
+    <div class="narrative-meta"><span>Noel Joseph Canlas</span><span>CS 499 · Milestone Three</span><span>September 24, 2026</span></div>
+    <div class="button-row"><a class="button primary" href="enhancement-two-narrative.docx" download>Download Word narrative <span aria-hidden="true">↓</span></a><span class="status">Published · Module 6</span></div>
+    <p class="edition-note">Publication edition · October 7, 2026. The review update adds measured benchmarks from the later build. Original milestone verification and later work are identified separately.</p>
+  </section>
+  <div class="container narrative-layout">
+    <aside class="narrative-sidebar"><nav aria-label="Narrative contents"><p class="eyebrow">In this narrative</p><a href="#artifact">01 / Artifact description and origin</a><a href="#skills">02 / Selection and demonstrated skills</a><a href="#outcomes">03 / Course outcomes and coverage plans</a><a href="#reflection">04 / Reflection on learning and challenges</a><a href="#references">05 / References</a><a href="#review-update">06 / Publication update after instructor review</a></nav><p>Looking for the newer interface?<br><a class="text-link" href="weight-progress.html#current-ui">See the current app UI ↗</a></p></aside>
+    <article class="narrative-body" aria-label="Enhancement 2 narrative"><section id="artifact" class="narrative-section"><h2>Artifact description and origin</h2>
+<p>Weight Progress is the Java Android application I developed in CS 360 Mobile Architecture and Programming during the May–June 2026 term. It supports local accounts, dated weight records, history editing, weight-loss goals, and optional SMS alerts. This enhancement adds moving averages, daily trend analysis, and conditional goal-date estimates. The source package preserves the original artifact and the pre-analytics UI Preview alongside the enhanced project. It also carries forward the recent onboarding, validation, lbs/kg, Me account controls, and stationary bottom-navigation improvements.</p>
+</section>
+<section id="skills" class="narrative-section"><h2>Selection and demonstrated skills</h2>
+<p>I selected this artifact because its dated measurements present an algorithmic problem with a visible result. A single weigh-in does not explain the pattern across a history. The new Home trends card connects my interest in front-end development with the calculations needed to present useful information. My QA background also makes boundary cases and clear explanations of unavailable results important to this work.</p>
+<p>The analyzer sorts a defensive copy by date, then uses an ArrayDeque and a running sum to calculate moving averages in one traversal. Java documents most ArrayDeque operations as amortized constant time (Oracle, n.d.). Each value enters once and leaves at most once. Compared with repeatedly scanning each window, the averaging pass improves from O(nw) to O(n) when treating window size as variable. Sorting makes the complete analysis O(n log n) in the worst case. The deque requires O(min(n,w)) space; the copied data and returned points make total additional space O(n).</p>
+<p>During that traversal, centered running moments calculate a least-squares daily slope using elapsed calendar days. This handles irregular dates without assuming daily entries. The fitted rate is extrapolated from the latest recorded weight, and explicit rules suppress unsuitable estimates. The average selector changes smoothing over 3, 7, or 14 entries; regression still uses all recorded observations. Results are calculated on a worker thread and converted to the preferred unit only for display.</p>
+</section>
+<section id="outcomes" class="narrative-section"><h2>Course outcomes and coverage plans</h2>
+<p>Outcome 3 is the main focus: selecting a deque, comparing algorithmic complexity, and verifying date-aware calculations demonstrate the planned algorithms-and-data-structures enhancement. Outcome 2 is supported by this narrative, pseudocode, design notes, and clear screen labels. Outcome 4 is supported by integrating the engine into the working application and testing its results against independent reference implementations. The 20,000-entry comparison checks every moving average; its operation counts illustrate the tradeoff, not a measured wall-clock speedup.</p>
+<p>For outcome 5, the engine rejects mixed-account inputs, non-finite measurements, duplicate dates, and invalid or future dates. Configuration and history-size limits bound the engine’s work, while the existing session check prevents stale results after logout. These measures provide security-related evidence without claiming a security certification. The planned coverage remains outcomes 2, 3, 4, and 5; this individual enhancement does not establish full evidence for outcome 1. Room, goal history, and further migration testing remain for the database milestone.</p>
+</section>
+<section id="reflection" class="narrative-section"><h2>Reflection on learning and challenges</h2>
+<p>This work reinforced that the meaning of data must guide the algorithm. Treating entry position as time would distort a trend when weigh-ins are irregular. Similarly, a seven-entry average is not a seven-day average, so the interface states that distinction. A test also exposed floating-point noise that could push an exact estimate one day late. Normalizing values extremely close to an integer before rounding resolved that boundary case and provided a useful regression test.</p>
+<p>Another challenge was deciding when not to display a prediction. Least-squares models can be sensitive to outliers and poor at extrapolation (NIST/SEMATECH, n.d.). The implementation requires sufficient history, checks direction and freshness, and limits the displayed horizon to one year. These are product safeguards, not validated medical thresholds. The original plan suggested filtering invalid records; I instead reject an invalid dataset as a whole to avoid silently changing its apparent trend. Estimates remain separate from the user’s chosen target date and are labeled as assumptions, not guarantees. Instructor feedback and subsequent benchmarking are discussed in the publication update below; broader device testing remains.</p>
+</section>
+<section id="references" class="narrative-section"><h2>References</h2>
+<p>NIST/SEMATECH. (n.d.). Linear least squares regression. In e-Handbook of Statistical Methods. <a href="https://www.itl.nist.gov/div898/handbook/pmd/section1/pmd141.htm">https://www.itl.nist.gov/div898/handbook/pmd/section1/pmd141.htm</a></p>
+<p>Oracle. (n.d.). ArrayDeque (Java SE 11). <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayDeque.html">https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayDeque.html</a></p>
+</section>
+<section id="review-update" class="narrative-section publication-followup"><h2>Publication update after instructor review</h2>
+<p>My instructor recognized the ArrayDeque and running-sum implementation as evidence of thoughtful data-structure selection and efficiency, and recommended measuring the analyzer with different history sizes. I addressed that feedback in the later Milestone Four build while retaining the original analytics implementation. The Milestone Three verification passed 94 unit tests and 47 emulator tests; later results are reported separately in the project case study.</p>
+<p>The benchmark used reproducibly shuffled synthetic histories with 10, 100, 1,000, and 10,000 daily records and a seven-entry moving-average window. Each workload received five warmups and eleven timed samples on one Android 15/API 35 ARM64 emulator in a debug build. The following measurements cover the full analyzer, including sorting, moving averages, and regression, rather than only the averaging pass.</p>
+<table class="benchmark-table"><caption>Full analyzer timing in milliseconds</caption><thead><tr><th scope="col">History entries</th><th scope="col">Median ms</th><th scope="col">p95 ms</th></tr></thead><tbody>
+<tr><th scope="row">10</th><td>0.189</td><td>0.476</td></tr>
+<tr><th scope="row">100</th><td>0.644</td><td>1.141</td></tr>
+<tr><th scope="row">1,000</th><td>5.435</td><td>17.282</td></tr>
+<tr><th scope="row">10,000</th><td>21.082</td><td>22.273</td></tr>
+</tbody></table>
+<p>With eleven samples, the nearest-rank p95 is the maximum observed sample. These exploratory measurements support discussion of increasing history sizes, but do not establish a before-and-after speedup or production performance. The documented overall worst-case complexity remains O(n log n). Broader device and accessibility testing remains follow-up work. Room and goal-history changes belong to the separate database enhancement.</p>
+<a class="button secondary" href="weight-progress.html#algorithms">Explore the algorithms <span aria-hidden="true">↗</span></a>
+</section></article>
+  </div>
+</main>
+<footer class="site-footer container"><a class="brand" href="index.html"><span class="monogram" aria-hidden="true">nc<span>.</span></span><span>Always learning.<br><strong>Always improving.</strong></span></a><div class="footer-links"><a href="index.html#work">All work ←</a><a href="#top">Back to top ↑</a></div><p>© 2026 Noel Canlas · CS 499 Computer Science ePortfolio</p></footer>
+</body></html>
