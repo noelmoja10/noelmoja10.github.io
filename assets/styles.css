@@ -2649,3 +2649,16 @@ ul {
   }
 
 }
+
+/* Final portfolio document and artifact navigation. */
+.hero-copy .hero-note { max-width:460px }
+.downloads-section { border-top:1px solid var(--line) }
+.downloads-section>.section-intro { margin-top:20px; max-width:720px }
+.download-list { margin-top:32px; border-top:1px solid var(--line) }
+.download-list>a { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 4px; border-bottom:1px solid var(--line); font-weight:600 }
+.download-list>a:hover { color:#146455; background:var(--sage) }
+.download-list small { display:block; font-size:12px; font-weight:400; color:var(--muted); margin-top:5px }
+.downloads-section>.test-note { max-width:850px; margin-top:24px }
+.narrative-hero h1 { overflow-wrap:normal }
+@media(max-width:800px) { .hero-copy .hero-note { max-width:none } }
+@media(max-width:600px) { .download-list>a { gap:16px; font-size:14px; padding-block:20px } .download-list small { font-size:11px } }
